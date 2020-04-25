@@ -1,0 +1,64 @@
+{"status":true,"data":[{"id_siswa":"40","nis":"21","nama":"Muhammad Luthfi Taqwim","tgl_lahir":"2020-04-20","alamat":"Kluwung","password":"202cb962ac59075b964b07152d234b70"},{"id_siswa":"44","nis":"6454","nama":"zulfakar","tgl_lahir":"2020-04-06","alamat":"kemiri","password":"202cb962ac59075b964b07152d234b70"},{"id_siswa":"45","nis":"2122","nama":"fulan","tgl_lahir":"2020-04-22","alamat":"sada","password":"202cb962ac59075b964b07152d234b70"},{"id_siswa":"47","nis":"834758","nama":"Taqwiem","tgl_lahir":"2020-04-22","alamat":"Kemiri","password":"202cb962ac59075b964b07152d234b70"},{"id_siswa":"48","nis":"834758","nama":"Luthfi","tgl_lahir":"2020-04-22","alamat":"Kluwung","password":"202cb962ac59075b964b07152d234b70"}]}
+
+json di atas memiliki 2 object status dan data
+
+perhatikan struk respone nya,
+jika array ada di dalam data, maka panggil nya 
+success: function(respone) {
+respone.data -> untuk get value object data
+respone.status -> untuk get value object status
+
+pelajari struktur data
+
+ada pertanyaan lain?
+
+ada mas,
+
+    $this->siswa->add($siswa);
+        $respone = array(
+            'status' => true,
+            'lokasi' => base_url() . "crud",
+        );
+        echo json_encode($respone);
+
+yang atas itu code untuk mengembalikan ke ajax, 
+
+ 'lokasi' => base_url() . "crud",
+
+ apakah lokasi itu bisa di taruh ke dalam response restful ?
+
+  if ($this->siswa->add($siswa) > 0) {
+
+            $this->response([
+                'status' => true,
+                'message' => 'Siswa has been created',
+                  'lokasi' => base_url() . "crud"
+            ], REST_Controller::HTTP_CREATED);
+        } else {
+            $this->response([
+                'status' => false,
+                'message' => 'Siswa not created',
+              
+            ], REST_Controller::HTTP_FAILED_DEPENDENCY);
+        }
+
+        
+            $this->response([
+                'status' => true,
+                'message' => 'Siswa has been created',
+                  'lokasi' => base_url() . "crud"
+            ], REST_Controller::HTTP_CREATED);
+
+            jadi sperti yang diatas?
+
+            bisa mas, repone kan yang create kita juga, jadi bebas mau di kasih param apa saja
+
+            oh yaya, paham mas :D
+
+            oke sipp, lanjut, perdalam pada struktur data ya, karena struktur data yang akan di hendle di project akan beda2 menyesuaikan kebutuhan dari frondend.
+
+            :)
+
+            oke mas makasih penjelasannya :)
+
+            sama2 :D

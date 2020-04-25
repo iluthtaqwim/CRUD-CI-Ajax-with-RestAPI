@@ -1,0 +1,96 @@
+                 $.ajax({
+                 url: '<?php echo base_url('index.php/auth/login') ?>',
+                 type: "post",
+                 dataType: "JSON",
+                 data: {
+                 nis: input_nis,
+                 password: input_pass
+                 },
+                 success: function(data) {
+                 if (data.status == true) {
+                 window.location.assign(data.lokasi);
+                 } else {
+                 $("#infolog").html(data.msg);
+                 }
+                 },
+                 error: function(jqXHR, textStatus, errorThrown) {
+                 alert('controller Error');
+                 }
+                 });
+
+                 gunakan script ajax di atas untuk mengirim request ke controller
+                 perhatikan pada param dataType :"json" ini artinya respone yang akan dikirim ke "success: function(data)" -> (data)
+                 berbentuk json
+                 jika datatype json maka respone balikan dari controller harus berbentuk json juga (json_encode), conth :
+                 $respone = array(
+                 'status' => false,
+                 'msg' => 'Maaf, username atau password yang anda masukkan salah.',
+                 );
+                 echo json_encode($respone);
+                 catatan : pelajari json_encode dan json_decode, ke2 function ini sering digunakan untuk menghandle data, resfull api
+                 juga menggunakan ke2 function itu.
+
+                 if (data.status == true) {
+                 window.location.assign(data.lokasi);
+                 } else {
+                 $("#infolog").html(data.msg);
+                 }
+
+                 logic pada success functin di atas hasil dari balikan controller dari request ke url: '<?php echo base_url('index.php/auth/login') ?>'
+                 balikan dari controller "{"status":false,"msg":"Maaf, username atau password yang anda masukkan salah."}"
+
+                 data.[param]
+                 param => status dan msg
+                 value => false dan Maaf, username atau password yang anda masukkan salah.
+
+                 pelajari parse json
+
+                 window.location.assign(data.lokasi); ini adalah redirect via jquery
+
+                 // controller
+                 if (!empty($this->input->post('nis'))) {
+
+                 kenapa !empty()? karena function isset tidak selalu bisa berfungsi di codeigniter, hanya di kasus2 ter tentu saja
+
+                 gunakan if(!empty) atau if($namavariable) atau if(!$namavariable)
+
+
+                 //model
+                 function do_login($nis, $pass)
+                 {
+                 $this->db->where('nis', $nis);
+                 $this->db->where('password', $pass);
+                 $query = $this->db->get('siswa');
+
+                 return $query->row();
+                 }
+
+                 jangan terbalik antara where dan get(),
+                 php akan membaca dari atas ke bawah, jika get() di atas maka data akan di tampilkan all data
+                 $this->db->get('siswa'); => fungsi get all data table siswa
+                 $this->db->get('siswa')->row(); => ->row() artinya hanya 1 data saja yang di ambil dan berbentuk object (tergantung dari cara menampilkan data)
+                 ->result() artinya menampilkan data lebih dari 1, biasanya untuk menampilkan data di table, karena semua data akan di tampilkan
+                 pelajari model di codeigniter
+
+
+                 ada pertanyaan lain?
+
+                 berarti kalo pakai ajax, direct halaman di script ajax ?
+
+                 iya ms, kalo request ke controller dari ajax, maka balikan akan di hendle juga oleh ajax,
+                 berbeda jika kita langsung submit dari action, karena lewat http maka akan langsung di handle oleh php(controller)
+                 intinya tergantung darimana request itu dikirim, kalo dari ajax, berikutny yang hendle adalah ajax, kalo php maka php yang hendle juga
+
+                 ada lagi mas?
+
+                 sudah jelas mas, terima kasih.
+
+                 untuk tabel menampilkan siswa dan kelas, itu di bikin 2 halaman yang berbeda ya mas?
+
+                 iya mas, halaman yang berbeda, yang 1 crud pake ajax, yang 1 crud pake biasa, langsung ke controller tanpa ajax
+
+                 ada lagi?
+
+                 cukup mas, terima kasih :)
+
+                 siap mas, sama2 :)

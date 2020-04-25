@@ -1,0 +1,39 @@
+perhatikan pada penulisan method post/get 
+native $_POST[''] sedangkan CI $this->input->post();
+native $_DET[''] sedangkan CI $this->input->det();
+
+perhatikan juga param yang di kirim,
+{
+    id: id_kls,
+    action: action_kls,
+}
+
+json di atas param nya adalah id dan action, sedang id_klas dan action_kls adalah value nya
+
+harus adda echo jika ingin menampilkan data : echo json_encode($respone);
+
+ada pertanyaan lain?
+
+ada mas, 
+
+di bagian update, ketika datanya di ubah , datanya menjadi 2 , beda kolom yang di ubah 
+
+jadi data yang lama masih, data yang setelah di edit ter upload juga ke db
+
+perhatikan pada url ajax nya karena menggunkan 1 form maka haru ada pembeda antara mode insert atau mode update
+saya cek sudah ada pembedanya hanya saja logic di url masih mengarah ke create, makanya ketika update malah nambah data
+
+                var fa = $('#form_action').val();
+                if (fa == 'Insert') {
+                    var af = 'crud/create';
+                } else {
+                    var af = 'crud/update_siswa';
+                }
+tinggal tambah logic sederhana saja cukup
+
+ada lagi?
+
+tidak ada mas
+
+terima kasih bantuannya :)
+siap sama2 mas :)
