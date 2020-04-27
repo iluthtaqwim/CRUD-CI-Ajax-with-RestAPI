@@ -5,7 +5,7 @@ require APPPATH . 'libraries/REST_Controller.php';
 
 require APPPATH . 'libraries/Format.php';
 
-class Kelas extends REST_Controller
+class KelasApi extends REST_Controller
 {
 
     function __construct()
@@ -14,33 +14,52 @@ class Kelas extends REST_Controller
         $this->load->model('Kelas_model', 'kelas');
     }
 
+
     function index_get()
     {
-        $id_kelas = $this->get('id_kls');
 
-        if ($id_kelas === null) {
-            $data = $this->kelas->get_kls();
-        } else {
-            $data = $this->kelas->get_kls($id_kelas);
-        }
+        $data = $this->kelas->getAll();
 
         if ($data) {
             $this->response([
                 'status' => true,
-                'data' => $data
+                'data' => $data,
+                'message' => 'Berhasil'
             ], REST_Controller::HTTP_OK);
         } else {
             $this->response([
                 'status' => false,
-                'message' => 'Data tidak ditemukan',
+                'message' => 'Gagal'
             ], REST_Controller::HTTP_NOT_FOUND);
         }
+
         echo json_encode($data);
     }
 
-    function index_post()
+    function fetch_get()
     {
+        $id_kelas = $this->get('id');
+        $data = $this->kelas->getKelas($id_kelas);
 
+
+        if ($data) {
+            $this->response([
+                'status' => true,
+                'data' => $data,
+                'message' => 'Berhasil'
+            ], REST_Controller::HTTP_OK);
+        } else {
+            $this->response([
+                'status' => false,
+                'message' => 'Gagal'
+            ], REST_Controller::HTTP_NOT_FOUND);
+        }
+
+        echo json_encode($data);
+    }
+
+    function add_post()
+    {
         $params = array(
 
             'tingkat' => $this->input->post('tingkat'),
@@ -66,6 +85,7 @@ class Kelas extends REST_Controller
 
     function update_post()
     {
+        $id_kelas = $this->post('id');
 
         $params = array(
 
@@ -74,8 +94,9 @@ class Kelas extends REST_Controller
             'jumlah_siswa' => $this->input->post('jml')
         );
 
-        $data = $this->kelas->updateKelas($this->input->post('hidden_id_kls'), $params);
-        if ($data > 0) {
+        $data = $this->kelas->updateKelas($id_kelas, $params);
+
+        if ($data) {
             $this->response([
                 'status' => true,
                 'message' => 'kelas has been modified',
@@ -91,10 +112,12 @@ class Kelas extends REST_Controller
         echo json_encode($data);
     }
 
-    public function delete_post()
-    {
 
+    function delete_post()
+    {
         $id_kelas = $this->post('id');
+
+        $data = $this->kelas->delete($id_kelas);
 
         if ($id_kelas === 0) {
             $this->response([
@@ -109,7 +132,7 @@ class Kelas extends REST_Controller
                     'status' => true,
                     'message' => 'DELETED',
                     'lokasi' => base_url() . "crud/kelas",
-                ], REST_Controller::HTTP_NO_CONTENT);
+                ], REST_Controller::HTTP_OK);
             } else {
                 $this->response([
                     'status' => false,
@@ -118,7 +141,5 @@ class Kelas extends REST_Controller
                 ], REST_Controller::HTTP_BAD_REQUEST);
             }
         }
-
-        echo json_encode($data);
     }
 }

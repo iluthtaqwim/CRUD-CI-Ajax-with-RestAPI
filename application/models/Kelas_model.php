@@ -3,7 +3,10 @@
 class Kelas_model extends CI_Model
 {
 
-
+    function getAll()
+    {
+        return $this->db->get('kelas')->result_array();
+    }
 
     function get_kls($id_kelas = null)
     {
@@ -13,6 +16,12 @@ class Kelas_model extends CI_Model
         } else {
             return $this->db->get_where('kelas', ['id_kelas' => $id_kelas])->result_array();
         }
+    }
+
+    function getKelas($id_kelas)
+    {
+        $this->db->where('id_kelas', $id_kelas);
+        return $this->db->get('kelas')->result_array();
     }
 
     function add($params)

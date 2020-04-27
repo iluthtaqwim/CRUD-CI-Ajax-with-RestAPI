@@ -71,7 +71,7 @@
             function getData() {
                 $.ajax({
                     type: 'get',
-                    url: 'http://localhost/sekolah/api/kelas',
+                    url: 'http://localhost/sekolah/api/kelasapi/',
                     dataType: 'json',
 
                     success: function(data) {
@@ -81,12 +81,13 @@
                                 '<td scope="row">' + data.data[i].tingkat + '</td>' +
                                 '<td scope="row">' + data.data[i].ruang + '</td>' +
                                 '<td scope="row">' + data.data[i].jumlah_siswa + '</td>' +
-
                                 '<td><button type="button" name="edit_kls" class="btn btn-primary btn-xs edit_kls" id="' + data.data[i].id_kelas + ' ">Edit</button>' +
                                 '<button type="button" name="delete_kls" class="btn btn-danger btn-xs delete_kls" id="' + data.data[i].id_kelas + '">Delete</button></td>' +
                                 '</tr>';
+
                         };
                         $('#list').html(baris);
+
                     }
                 });
             }
@@ -142,9 +143,9 @@
                     var form_data = $(this).serialize();
                     var fa = $('#form_action_kls').val();
                     if (fa == 'Insert') {
-                        var af = 'http://localhost/sekolah/api/kelas';
+                        var af = 'http://localhost/sekolah/api/kelasapi/add';
                     } else {
-                        var af = 'http://localhost/sekolah/api/kelas/update';
+                        var af = 'http://localhost/sekolah/api/kelasapi/update';
                     }
                     $.ajax({
                         url: af,
@@ -168,13 +169,13 @@
             });
 
             $(document).on('click', '.edit_kls', function() {
-                var id_kls = $(this).attr('id');
+                var id = $(this).attr('id');
                 var action_kls = 'fetch';
                 $.ajax({
-                    url: "http://localhost/sekolah/api/kelas/",
+                    url: "http://localhost/sekolah/api/kelasapi/fetch",
                     method: "get",
                     data: {
-                        id: id_kls,
+                        id: id,
                         action: action_kls,
                     },
                     dataType: "json",
@@ -186,16 +187,16 @@
 
                         $('#modelKls').attr('title', 'Edit Data');
                         $('#action_kls').val('update');
-                        $('#hidden_id_kls').val(id_kls);
+                        $('#hidden_id_kls').val(id);
                         $('#form_action_kls').val('Update');
                         $('#modelKls').dialog('open');
 
 
-                        if (data.data.status == true) {
+                        if (status == true) {
                             $('#modelKls').dialog('close');
-                            window.location.assign(data.data.lokasi);
+                            window.location.assign(data.lokasi);
                         } else {
-                            $("#infolog").html(data.data.msg);
+                            $("#infolog").html(data.msg);
                         }
                     }
                 });
@@ -219,7 +220,7 @@
                         var action = 'delete';
 
                         $.ajax({
-                            url: "http://localhost/sekolah/api/kelas/delete",
+                            url: "http://localhost/sekolah/api/kelasapi/delete",
                             method: "POST",
                             dataType: 'json',
                             data: {
@@ -227,10 +228,10 @@
                                 action: action
                             },
                             success: function(data) {
-                                console.log(data);
-                                if (data.data.status == true) {
-                                    $('#delete_confirmation').dialog('close');
-                                    window.location.assign(data.data.lokasi);
+
+                                if (data.status == true) {
+                                    $('#delete_confirmation_kls').dialog('close');
+                                    window.location.assign(data.lokasi);
                                 } else {
                                     $("#infolog").html(data.data.msg);
                                 }

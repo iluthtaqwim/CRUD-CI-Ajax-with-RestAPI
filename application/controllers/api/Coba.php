@@ -53,12 +53,12 @@ class Coba extends REST_Controller
             ], REST_Controller::HTTP_BAD_REQUEST);
         } else {
             $data = $this->siswa->delete($id_siswa);
-            if ($data) {
+            if ($data > 0) {
                 $this->response([
                     'status' => true,
                     'message' => 'DELETED',
                     'lokasi' => base_url() . "crud",
-                ], REST_Controller::HTTP_NO_CONTENT);
+                ], REST_Controller::HTTP_OK);
             } else {
                 $this->response([
                     'status' => false,

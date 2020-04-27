@@ -6,7 +6,6 @@ class Siswa_model extends CI_Model
     function getSiswa($id_siswa = null)
     {
         if ($id_siswa === null) {
-
             return  $this->db->get('siswa')->result_array();
         } else {
             return $this->db->get_where('siswa', ['id_siswa' => $id_siswa])->result_array();

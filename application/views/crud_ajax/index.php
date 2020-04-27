@@ -264,8 +264,6 @@
                                 if (data.status == true) {
                                     $('#delete_confirmation').dialog('close');
                                     window.location.assign(data.lokasi);
-                                } else {
-                                    $("#infolog").html(data.msg);
                                 }
 
                             }

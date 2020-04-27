@@ -175,7 +175,7 @@ class Crud extends CI_Controller
         );
         if ($_POST['action'] == 'fetch') {
 
-            $result = $this->kelas->get_kls($id_kelas);
+            $result = $this->kelas->getKelas($id_kelas);
         }
         echo json_encode($result);
 
